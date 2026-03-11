@@ -1,3 +1,7 @@
+# -------------------------------------------------
+# SECURITY GROUP
+# -------------------------------------------------
+
 resource "aws_security_group" "wordpress_sg" {
   name        = "wordpress-sg"
   description = "Allow HTTP and SSH"
@@ -22,4 +26,26 @@ resource "aws_security_group" "wordpress_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+# -------------------------------------------------
+# WORDPRESS INSTALLATION SCRIPT
+# -------------------------------------------------
+
+locals {
+  wordpress_install = <<-EOF
+              #!/bin/bash
+              yum update -y
+              amazon-linux-extras install lamp-mariadb10.2-php7.2 php7.2 -y
+              yum install -y httpd mariadb-server
+              systemctl start httpd
+              systemctl enable httpd
+
+              cd /var/www/html
+              wget https://wordpress.org/latest.tar.gz
+              tar -xzf latest.tar.gz
+              cp -r wordpress/* .
+              rm -rf wordpress latest.tar.gz
+              chown -R apache:apache /var/www/html
+              EOF
 }
