@@ -91,3 +91,23 @@ resource "aws_instance" "wordpress_dev" {
     Name = "WordPress-Development"
   }
 }
+
+# -------------------------------------------------
+# CLOUDWATCH CPU MONITORING
+# -------------------------------------------------
+
+resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
+
+  alarm_name          = "wordpress-high-cpu"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "120"
+  statistic           = "Average"
+  threshold           = "80"
+
+  dimensions = {
+    InstanceId = aws_instance.wordpress_prod.id
+  }
+}
