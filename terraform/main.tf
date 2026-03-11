@@ -56,7 +56,7 @@ locals {
 
 resource "aws_instance" "wordpress_prod" {
 
-  ami           = "ami-0f5ee92e2d63afc18"
+  ami           = "ami-0c02fb55956c7d316"
   instance_type = var.instance_type
   key_name      = var.key_name
 
@@ -77,7 +77,7 @@ resource "aws_instance" "wordpress_prod" {
 
 resource "aws_instance" "wordpress_dev" {
 
-  ami           = "ami-0f5ee92e2d63afc18"
+  ami           = "ami-0c02fb55956c7d316"
   instance_type = var.instance_type
   key_name      = var.key_name
 
