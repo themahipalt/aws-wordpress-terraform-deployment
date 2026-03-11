@@ -70,3 +70,24 @@ resource "aws_instance" "wordpress_prod" {
     Name = "WordPress-Production"
   }
 }
+
+# -------------------------------------------------
+# DEVELOPMENT WORDPRESS INSTANCE
+# -------------------------------------------------
+
+resource "aws_instance" "wordpress_dev" {
+
+  ami           = "ami-0f5ee92e2d63afc18"
+  instance_type = var.instance_type
+  key_name      = var.key_name
+
+  vpc_security_group_ids = [
+    aws_security_group.wordpress_sg.id
+  ]
+
+  user_data = local.wordpress_install
+
+  tags = {
+    Name = "WordPress-Development"
+  }
+}
