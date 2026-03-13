@@ -111,5 +111,3 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
     InstanceId = aws_instance.wordpress_prod.id
   }
 }
-
-//testing 
